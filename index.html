@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Facts Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .category {
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .category:hover {
+            background-color: #e0e0e0;
+        }
+
+        .fact-box {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .category {
+            background-color: #555;
+        }
+
+        .dark-mode .category:hover {
+            background-color: #666;
+        }
+
+        .dark-mode .fact-box {
+            background-color: #444;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            transition: transform 0.5s ease;
+        }
+
+        .theme-toggle .icon {
+            display: inline-block;
+            transition: transform 0.5s ease;
+        }
+
+        .dark-mode .theme-toggle .icon {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Fun Facts Generator</h1>
+            <button id="theme-toggle" class="theme-toggle">
+                <span class="icon">🌞</span>
+            </button>
+        </header>
+        <main>
+            <div class="categories">
+                <button class="category" data-category="science">🔬 Science</button>
+                <button class="category" data-category="history">📜 History</button>
+                <button class="category" data-category="space">🚀 Space</button>
+                <button class="category" data-category="geography">🌍 Geography</button>
+            </div>
+            <div class="fact-box">
+                <p id="fact-text">Select a category to get started</p>
+            </div>
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const factText = document.getElementById('fact-text');
+            const themeToggle = document.getElementById('theme-toggle');
+            const categories = document.querySelectorAll('.category');
+            const factsData = {
+                "science": [
+                    "The Eiffel Tower can be 15 cm taller during the summer.",
+                    "Bananas are berries, but strawberries aren't."
+                ],
+                "history": [
+                    "Oxford University is older than the Aztec Empire.",
+                    "Cleopatra lived closer in time to the Moon landing than to the construction of the Great Pyramid."
+                ],
+                "space": [
+                    "A day on Venus is longer than a year on Venus.",
+                    "There are more stars in the universe than grains of sand on Earth."
+                ],
+                "geography": [
+                    "Russia has a larger surface area than Pluto.",
+                    "Australia is wider than the moon."
+                ]
+            };
+
+            // Handle category click
+            categories.forEach(category => {
+                category.addEventListener('click', () => {
+                    const categoryType = category.getAttribute('data-category');
+                    const facts = factsData[categoryType];
+                    const randomFact = facts[Math.floor(Math.random() * facts.length)];
+                    factText.textContent = randomFact;
+                });
+            });
+
+            // Toggle light/dark mode
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const icon = themeToggle.querySelector('.icon');
+                icon.textContent = document.body.classList.contains('dark-mode') ? '🌜' : '🌞';
+            });
+        });
+    </script>
+</body>
+</html>
